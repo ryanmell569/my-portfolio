@@ -643,17 +643,11 @@ export default function UIOverlay() {
       </div>
 
       {/* Footer */}
-      <footer className={`w-full border-t py-8 px-4 text-center text-xs text-slate-500 relative z-10 ${isDark ? 'border-cyan-950/60 bg-[#04060a]' : 'border-violet-950/60 bg-slate-950'}`}>
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className="hover:text-slate-300 transition-colors">Home</a>
-            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className="hover:text-slate-300 transition-colors">About</a>
-            <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-slate-300 transition-colors">Projects</a>
-            <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-slate-300 transition-colors">Contact</a>
-          </div>
-        </div>
-      </footer>
+    <footer className={`w-full border-t py-8 px-4 text-center text-xs text-slate-500 relative z-10 ${isDark ? 'border-cyan-950/60 bg-[#04060a]' : 'border-violet-950/60 bg-slate-950'}`}>
+  <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-4">
+    <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
+  </div>
+</footer>
     </div>
   );
-}
+} 
