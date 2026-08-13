@@ -1,3 +1,4 @@
+
 // src/components/UIOverlay.jsx
 import React, { useState, useEffect } from 'react';
 import TechStack from './TechStack';
@@ -163,6 +164,21 @@ export default function UIOverlay() {
           scroll-behavior: smooth;
         }
 
+        @keyframes floatSlow {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        @keyframes floatFast {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-14px) rotate(-3deg); }
+        }
+        .animate-float-slow {
+          animation: floatSlow 4s ease-in-out infinite;
+        }
+        .animate-float-fast {
+          animation: floatFast 3s ease-in-out infinite;
+        }
+
         @keyframes scrollLeft {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-50%); }
@@ -286,10 +302,40 @@ export default function UIOverlay() {
               </div>
             </div>
 
-            {/* Profile Card */}
+            {/* Profile Card with Flying Floating Tech Tools */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="relative group w-72 h-[22rem] sm:w-80 sm:h-[25rem] flex items-end justify-center">
+              <div className="relative group w-72 h-[22rem] sm:w-80 sm:h-[25rem] flex items-end justify-center my-6">
                 <div className={`absolute -inset-2 bg-gradient-to-tr rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-60 transition duration-700 ${isViolet ? 'from-violet-600 via-purple-900 to-indigo-950' : 'from-cyan-600 via-teal-900 to-indigo-950'}`}></div>
+
+                {/* Floating Tool Badge: PHP (Top Left) */}
+                <div className="absolute -top-6 -left-6 z-30 animate-float-slow hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-cyan-500/40 shadow-xl">
+                  <i className="fab fa-php text-cyan-400 text-lg"></i>
+                  <span className="text-xs font-bold text-slate-200">PHP</span>
+                </div>
+
+                {/* Floating Tool Badge: Laravel (Top Right) */}
+                <div className="absolute -top-4 -right-6 z-30 animate-float-fast hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-red-500/40 shadow-xl">
+                  <i className="fab fa-laravel text-red-400 text-lg"></i>
+                  <span className="text-xs font-bold text-slate-200">Laravel</span>
+                </div>
+
+              {/* JavaScript Badge (Upper Left) */}
+<div className="absolute top-1/4 -left-8 z-30 animate-float-fast hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-yellow-500/40 shadow-xl">
+  <i className="fab fa-js text-yellow-400 text-base"></i>
+  <span className="text-xs font-bold text-slate-200">JS</span>
+</div>
+
+{/* React Badge (Lower Left) */}
+<div className="absolute top-2/3 -left-10 z-30 animate-float-slow hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-sky-400/40 shadow-lg">
+  <i className="fab fa-react text-sky-400 text-sm animate-spin" style={{ animationDuration: '8s' }}></i>
+  <span className="text-[11px] font-bold text-slate-200">React</span>
+</div>
+
+                {/* Floating Tool Badge: MySQL (Mid Right) */}
+                <div className="absolute top-1/2 -right-8 z-30 animate-float-slow hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-blue-500/40 shadow-xl">
+                  <i className="fas fa-database text-blue-400 text-base"></i>
+                  <span className="text-xs font-bold text-slate-200">MySQL</span>
+                </div>
 
                 <div className={themeClasses.profileCardBg}>
                   <div className="absolute inset-0 bg-[linear-gradient(to_right,#06b6d405_1px,transparent_1px),linear-gradient(to_bottom,#06b6d405_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none"></div>
@@ -536,25 +582,23 @@ export default function UIOverlay() {
                       onChange={handleChange}
                       required
                       className={themeClasses.inputField}
-                      placeholder="Type your message here..."
+                      placeholder="Write your message here..."
                     ></textarea>
                   </div>
-
                   {formStatus && (
-                    <div className={`p-4 rounded-xl text-sm ${formStatus.type === 'success' ? 'bg-emerald-950/80 border border-emerald-800/60 text-emerald-300' : 'bg-rose-950/80 border border-rose-800/60 text-rose-300'}`}>
+                    <div className={`p-4 rounded-xl text-sm ${formStatus.type === 'success' ? 'bg-emerald-950/60 border border-emerald-800/60 text-emerald-300' : 'bg-rose-950/60 border border-rose-800/60 text-rose-300'}`}>
                       {formStatus.text}
                     </div>
                   )}
-
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full font-bold py-4 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer ${isViolet ? 'bg-violet-600 hover:bg-violet-500 text-slate-950 shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'bg-cyan-600 hover:bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.4)]'}`}
+                    className={`w-full font-bold py-3.5 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${isViolet ? 'bg-violet-600 hover:bg-violet-500 text-slate-950 shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'bg-cyan-600 hover:bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.4)]'}`}
                   >
                     {isSubmitting ? (
                       <>
                         <i className="fas fa-spinner fa-spin"></i>
-                        <span>Sending Message...</span>
+                        <span>Sending...</span>
                       </>
                     ) : (
                       <>
@@ -572,13 +616,21 @@ export default function UIOverlay() {
 
       </div>
 
-      {/* Footer / Copyright */}
-      <footer className="w-full py-8 border-t border-slate-900 bg-[#04060a] text-center text-xs text-slate-500 relative z-10">
+      {/* Scroll-to-Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          title="Scroll to Top"
+          className={`fixed bottom-6 right-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center text-slate-950 font-bold shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer ${isViolet ? 'bg-violet-500 hover:bg-violet-400 shadow-[0_0_20px_rgba(124,58,237,0.6)]' : 'bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]'}`}
+        >
+          <i className="fas fa-arrow-up"></i>
+        </button>
+      )}
+
+      {/* Footer */}
+      <footer className="w-full py-8 border-t border-cyan-950/60 text-center text-xs text-slate-500 relative z-10 bg-[#04060a]">
         <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
       </footer>
-
-      {/* Scroll-to-Top Floating Button */}
-      
     </div>
   );
 }
