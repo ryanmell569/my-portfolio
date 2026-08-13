@@ -1,4 +1,3 @@
-
 // src/components/UIOverlay.jsx
 import React, { useState, useEffect } from 'react';
 import TechStack from './TechStack';
@@ -10,6 +9,7 @@ export default function UIOverlay() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [theme, setTheme] = useState('dark');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Toggle between dark and violet themes (no light/sun mode)
   const toggleTheme = () => {
@@ -40,6 +40,7 @@ export default function UIOverlay() {
   // Smooth scroll handler for anchor links
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({
@@ -92,8 +93,8 @@ export default function UIOverlay() {
 
   const themeClasses = {
     container: isDark 
-      ? 'w-full min-h-screen flex flex-col relative bg-[#04060a] text-slate-100 transition-colors duration-500'
-      : 'w-full min-h-screen flex flex-col relative bg-slate-950 text-slate-100 transition-colors duration-500',
+      ? 'w-full min-h-screen flex flex-col relative bg-[#04060a] text-slate-100 transition-colors duration-500 overflow-x-hidden'
+      : 'w-full min-h-screen flex flex-col relative bg-slate-950 text-slate-100 transition-colors duration-500 overflow-x-hidden',
     header: isDark 
       ? 'fixed top-0 left-0 right-0 z-50 w-full bg-[#07090e]/85 backdrop-blur-2xl border-b border-cyan-950/60 shadow-[0_8px_30px_rgb(0,0,0,0.6)]'
       : 'fixed top-0 left-0 right-0 z-50 w-full bg-slate-900/85 backdrop-blur-2xl border-b border-violet-950/60 shadow-[0_8px_30px_rgb(0,0,0,0.6)]',
@@ -101,32 +102,32 @@ export default function UIOverlay() {
       ? 'text-lg font-extrabold tracking-wider bg-gradient-to-r from-white via-slate-300 to-cyan-400 bg-clip-text text-transparent'
       : 'text-lg font-extrabold tracking-wider bg-gradient-to-r from-white via-slate-300 to-violet-400 bg-clip-text text-transparent',
     navLink: isDark 
-      ? 'hover:text-cyan-400 transition-colors text-slate-400 cursor-pointer'
-      : 'hover:text-violet-400 transition-colors text-slate-400 cursor-pointer',
+      ? 'hover:text-cyan-400 transition-colors text-slate-400 cursor-pointer text-base md:text-sm font-medium py-2'
+      : 'hover:text-violet-400 transition-colors text-slate-400 cursor-pointer text-base md:text-sm font-medium py-2',
     badge: isDark 
       ? 'inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0a0f18]/80 border border-cyan-950/80 backdrop-blur-md shadow-sm'
       : 'inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-violet-950/80 backdrop-blur-md shadow-sm',
     badgeText: isDark 
       ? 'text-cyan-300 font-medium tracking-wide text-xs uppercase'
       : 'text-violet-400 font-medium tracking-wide text-xs uppercase',
-    headingMain: 'text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.08] text-white',
+    headingMain: 'text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] text-white',
     paragraph: 'text-slate-400 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl font-normal',
     secondaryBtn: isDark 
-      ? 'border border-cyan-950/80 hover:border-cyan-700/60 bg-[#0a0f18]/60 backdrop-blur-md px-7 py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95'
-      : 'border border-violet-950/80 hover:border-violet-700/60 bg-slate-900/60 backdrop-blur-md px-7 py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95',
+      ? 'border border-cyan-950/80 hover:border-cyan-700/60 bg-[#0a0f18]/60 backdrop-blur-md px-6 py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 text-center'
+      : 'border border-violet-950/80 hover:border-violet-700/60 bg-slate-900/60 backdrop-blur-md px-6 py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 text-center',
     profileCardBg: isDark 
       ? 'relative w-full h-full rounded-[2.5rem] bg-[#04060a]/90 border border-cyan-950/80 shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden flex items-end justify-center'
       : 'relative w-full h-full rounded-[2.5rem] bg-slate-950/90 border border-violet-950/80 shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden flex items-end justify-center',
     profileFooter: isDark 
-      ? 'absolute bottom-4 left-4 right-4 z-20 bg-[#07090e]/95 backdrop-blur-xl border border-cyan-900/50 px-4 py-3 rounded-2xl flex items-center justify-between shadow-2xl'
-      : 'absolute bottom-4 left-4 right-4 z-20 bg-slate-900/95 backdrop-blur-xl border border-violet-900/50 px-4 py-3 rounded-2xl flex items-center justify-between shadow-2xl',
-    profileName: 'text-xs font-semibold text-slate-200 tracking-wide',
+      ? 'absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 bg-[#07090e]/95 backdrop-blur-xl border border-cyan-900/50 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl flex items-center justify-between shadow-2xl'
+      : 'absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 bg-slate-900/95 backdrop-blur-xl border border-violet-900/50 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl flex items-center justify-between shadow-2xl',
+    profileName: 'text-[11px] sm:text-xs font-semibold text-slate-200 tracking-wide truncate max-w-[140px] sm:max-w-none',
     statusBadge: isDark 
-      ? 'text-[10px] tracking-wider uppercase bg-cyan-950/80 border border-cyan-800/60 text-cyan-300 px-2.5 py-1 rounded-lg font-medium shadow-inner'
-      : 'text-[10px] tracking-wider uppercase bg-violet-950/80 border border-violet-800/60 text-violet-400 font-medium px-2.5 py-1 rounded-lg shadow-inner',
+      ? 'text-[10px] tracking-wider uppercase bg-cyan-950/80 border border-cyan-800/60 text-cyan-300 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg font-medium shadow-inner shrink-0'
+      : 'text-[10px] tracking-wider uppercase bg-violet-950/80 border border-violet-800/60 text-violet-400 font-medium px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg shadow-inner shrink-0',
     cardBox: isDark 
-      ? 'bg-[#07090e]/70 backdrop-blur-2xl border border-cyan-950/60 p-8 sm:p-12 md:p-16 rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:border-cyan-800/40 w-full'
-      : 'bg-slate-900/70 backdrop-blur-2xl border border-violet-950/60 p-8 sm:p-12 md:p-16 rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:border-violet-800/40 w-full',
+      ? 'bg-[#07090e]/70 backdrop-blur-2xl border border-cyan-950/60 p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:border-cyan-800/40 w-full'
+      : 'bg-slate-900/70 backdrop-blur-2xl border border-violet-950/60 p-6 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:border-violet-800/40 w-full',
     subCardBox: isDark 
       ? 'lg:col-span-5 bg-[#04060a]/80 border border-cyan-950/60 p-6 sm:p-8 rounded-3xl space-y-6'
       : 'lg:col-span-5 bg-slate-950/80 border border-violet-950/60 p-6 sm:p-8 rounded-3xl space-y-6',
@@ -134,14 +135,14 @@ export default function UIOverlay() {
       ? 'px-3.5 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-900/50 text-cyan-300 text-xs font-semibold'
       : 'px-3.5 py-1.5 rounded-xl bg-violet-950/40 border border-violet-900/50 text-violet-400 font-medium text-xs',
     projectCard: isDark 
-      ? 'bg-[#07090e]/70 backdrop-blur-2xl border border-cyan-950/60 p-8 rounded-[2rem] shadow-2xl transition-all duration-500 hover:-translate-y-1.5 hover:border-cyan-700/50 group flex flex-col justify-between'
-      : 'bg-slate-900/70 backdrop-blur-2xl border border-violet-950/60 p-8 rounded-[2rem] shadow-2xl transition-all duration-500 hover:-translate-y-1.5 hover:border-violet-700/50 group flex flex-col justify-between',
+      ? 'bg-[#07090e]/70 backdrop-blur-2xl border border-cyan-950/60 p-6 sm:p-8 rounded-[2rem] shadow-2xl transition-all duration-500 hover:-translate-y-1.5 hover:border-cyan-700/50 group flex flex-col justify-between'
+      : 'bg-slate-900/70 backdrop-blur-2xl border border-violet-950/60 p-6 sm:p-8 rounded-[2rem] shadow-2xl transition-all duration-500 hover:-translate-y-1.5 hover:border-violet-700/50 group flex flex-col justify-between',
     projectImgBox: isDark 
-      ? 'h-44 rounded-2xl bg-gradient-to-br from-cyan-950/40 to-[#04060a] border border-cyan-950/60 flex items-center justify-center overflow-hidden relative mb-6'
-      : 'h-44 rounded-2xl bg-gradient-to-br from-violet-950/40 to-slate-950 border border-violet-950/60 flex items-center justify-center overflow-hidden relative mb-6',
+      ? 'h-40 sm:h-44 rounded-2xl bg-gradient-to-br from-cyan-950/40 to-[#04060a] border border-cyan-950/60 flex items-center justify-center overflow-hidden relative mb-6'
+      : 'h-40 sm:h-44 rounded-2xl bg-gradient-to-br from-violet-950/40 to-slate-950 border border-violet-950/60 flex items-center justify-center overflow-hidden relative mb-6',
     inputField: isDark 
-      ? 'w-full bg-[#07090e] border border-cyan-950/80 rounded-xl px-4.5 py-3.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm shadow-inner'
-      : 'w-full bg-slate-900 border border-violet-950/80 rounded-xl px-4.5 py-3.5 text-white focus:outline-none focus:border-violet-500 transition-colors text-sm shadow-inner',
+      ? 'w-full bg-[#07090e] border border-cyan-950/80 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm shadow-inner'
+      : 'w-full bg-slate-900 border border-violet-950/80 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-violet-500 transition-colors text-sm shadow-inner',
     contactInfoBox: isDark 
       ? 'flex items-center gap-4 p-4 rounded-2xl bg-[#04060a]/80 border border-cyan-950/80'
       : 'flex items-center gap-4 p-4 rounded-2xl bg-slate-950/80 border border-violet-950/80',
@@ -155,13 +156,17 @@ export default function UIOverlay() {
 
   return (
     <div className={themeClasses.container}>
-      {/* Import Styles & Global Scroll Behavior */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
 
         html {
           scroll-behavior: smooth;
+        }
+
+        body {
+          font-family: 'Poppins', sans-serif;
+          overflow-x: hidden;
         }
 
         @keyframes floatSlow {
@@ -216,6 +221,7 @@ export default function UIOverlay() {
             </h1>
           </button>
           
+          {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8 text-sm font-medium">
             <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className={themeClasses.navLink}>Home</a>
             <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={themeClasses.navLink}>About</a>
@@ -224,7 +230,7 @@ export default function UIOverlay() {
             <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className={themeClasses.navLink}>Contact</a>
           </nav>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
@@ -238,16 +244,19 @@ export default function UIOverlay() {
               <i className={isDark ? "fas fa-moon" : "fas fa-palette"}></i>
             </button>
 
+            {/* Mobile Hamburger Button */}
             <button
-              onClick={scrollToTop}
-              title="Back to Top"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              title="Toggle Menu"
+              aria-label="Toggle Menu"
               className={isDark
-                ? "md:hidden bg-cyan-950/40 border border-cyan-800/40 hover:bg-cyan-900/60 text-cyan-300 p-2.5 rounded-xl text-sm transition-all duration-300 shadow-inner"
-                : "md:hidden bg-violet-950/40 border border-violet-800/40 hover:bg-violet-900/60 text-violet-400 p-2.5 rounded-xl text-sm transition-all duration-300 shadow-inner"
+                ? "md:hidden bg-cyan-950/40 border border-cyan-800/40 hover:bg-cyan-900/60 text-cyan-300 p-2.5 rounded-xl text-sm transition-all duration-300 shadow-inner cursor-pointer"
+                : "md:hidden bg-violet-950/40 border border-violet-800/40 hover:bg-violet-900/60 text-violet-400 p-2.5 rounded-xl text-sm transition-all duration-300 shadow-inner cursor-pointer"
               }
             >
-              <i className="fas fa-arrow-up"></i>
+              <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
             </button>
+
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, 'contact')}
@@ -260,16 +269,27 @@ export default function UIOverlay() {
             </a>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className={`md:hidden border-t px-6 py-5 flex flex-col space-y-4 backdrop-blur-2xl transition-all ${isDark ? 'bg-[#07090e]/95 border-cyan-950/60' : 'bg-slate-900/95 border-violet-950/60'}`}>
+            <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className={themeClasses.navLink}>Home</a>
+            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={themeClasses.navLink}>About</a>
+            <a href="#skills" onClick={(e) => handleNavClick(e, 'skills')} className={themeClasses.navLink}>Toolkit</a>
+            <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className={themeClasses.navLink}>Projects</a>
+            <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className={themeClasses.navLink}>Contact</a>
+          </div>
+        )}
       </header>
 
       {/* Main Content Wrapper */}
-      <div className="relative z-10 flex flex-col px-4 sm:px-8 md:px-16 max-w-7xl mx-auto w-full pointer-events-auto flex-grow pt-24">
+      <div className="relative z-10 flex flex-col px-4 sm:px-8 md:px-16 max-w-7xl mx-auto w-full pointer-events-auto flex-grow pt-24 overflow-x-hidden">
         
         {/* Hero Section */}
-        <main id="hero" className="w-full py-20 md:py-28 my-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <main id="hero" className="w-full py-12 sm:py-20 md:py-28 my-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
               <div className={themeClasses.badge}>
                 <span className={`w-2 h-2 rounded-full animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)] ${isViolet ? 'bg-violet-400' : 'bg-cyan-400'}`}></span>
                 <span className={themeClasses.badgeText}>BSIS Graduate • Makilala, Cotabato</span>
@@ -283,7 +303,7 @@ export default function UIOverlay() {
                 An aspiring systems and web developer focused on architecting structured backends, clean interfaces, and full-stack solutions with modern PHP, Laravel, and JavaScript.
               </p>
               
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-2 flex flex-wrap justify-center lg:justify-start items-center gap-4 w-full">
                 <a
                   href="#projects"
                   onClick={(e) => handleNavClick(e, 'projects')}
@@ -302,39 +322,39 @@ export default function UIOverlay() {
               </div>
             </div>
 
-            {/* Profile Card with Flying Floating Tech Tools */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative group w-72 h-[22rem] sm:w-80 sm:h-[25rem] flex items-end justify-center my-6">
+            {/* Profile Card with Floating Tech Tools */}
+            <div className="lg:col-span-5 flex justify-center w-full mt-6 lg:mt-0">
+              <div className="relative group w-64 h-[20rem] sm:w-80 sm:h-[25rem] flex items-end justify-center my-4">
                 <div className={`absolute -inset-2 bg-gradient-to-tr rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-60 transition duration-700 ${isViolet ? 'from-violet-600 via-purple-900 to-indigo-950' : 'from-cyan-600 via-teal-900 to-indigo-950'}`}></div>
 
-                {/* Floating Tool Badge: PHP (Top Left) */}
-                <div className="absolute -top-6 -left-6 z-30 animate-float-slow hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-cyan-500/40 shadow-xl">
-                  <i className="fab fa-php text-cyan-400 text-lg"></i>
-                  <span className="text-xs font-bold text-slate-200">PHP</span>
+                {/* Floating Tool Badge: PHP */}
+                <div className="absolute -top-4 -left-2 sm:-top-6 sm:-left-6 z-30 animate-float-slow flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-cyan-500/40 shadow-xl">
+                  <i className="fab fa-php text-cyan-400 text-base sm:text-lg"></i>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">PHP</span>
                 </div>
 
-                {/* Floating Tool Badge: Laravel (Top Right) */}
-                <div className="absolute -top-4 -right-6 z-30 animate-float-fast hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-red-500/40 shadow-xl">
-                  <i className="fab fa-laravel text-red-400 text-lg"></i>
-                  <span className="text-xs font-bold text-slate-200">Laravel</span>
+                {/* Floating Tool Badge: Laravel */}
+                <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-6 z-30 animate-float-fast flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-red-500/40 shadow-xl">
+                  <i className="fab fa-laravel text-red-400 text-base sm:text-lg"></i>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">Laravel</span>
                 </div>
 
-              {/* JavaScript Badge (Upper Left) */}
-<div className="absolute top-1/4 -left-8 z-30 animate-float-fast hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-yellow-500/40 shadow-xl">
-  <i className="fab fa-js text-yellow-400 text-base"></i>
-  <span className="text-xs font-bold text-slate-200">JS</span>
-</div>
+                {/* JavaScript Badge */}
+                <div className="absolute top-1/4 -left-3 sm:-left-8 z-30 animate-float-fast flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-yellow-500/40 shadow-xl">
+                  <i className="fab fa-js text-yellow-400 text-sm sm:text-base"></i>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">JS</span>
+                </div>
 
-{/* React Badge (Lower Left) */}
-<div className="absolute top-2/3 -left-10 z-30 animate-float-slow hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-sky-400/40 shadow-lg">
-  <i className="fab fa-react text-sky-400 text-sm animate-spin" style={{ animationDuration: '8s' }}></i>
-  <span className="text-[11px] font-bold text-slate-200">React</span>
-</div>
+                {/* React Badge */}
+                <div className="absolute top-2/3 -left-4 sm:-left-10 z-30 animate-float-slow flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-sky-400/40 shadow-lg">
+                  <i className="fab fa-react text-sky-400 text-xs sm:text-sm animate-spin" style={{ animationDuration: '8s' }}></i>
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-200">React</span>
+                </div>
 
-                {/* Floating Tool Badge: MySQL (Mid Right) */}
-                <div className="absolute top-1/2 -right-8 z-30 animate-float-slow hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-blue-500/40 shadow-xl">
-                  <i className="fas fa-database text-blue-400 text-base"></i>
-                  <span className="text-xs font-bold text-slate-200">MySQL</span>
+                {/* MySQL Badge */}
+                <div className="absolute top-1/2 -right-3 sm:-right-8 z-30 animate-float-slow flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-blue-500/40 shadow-xl">
+                  <i className="fas fa-database text-blue-400 text-sm sm:text-base"></i>
+                  <span className="text-[11px] sm:text-xs font-bold text-slate-200">MySQL</span>
                 </div>
 
                 <div className={themeClasses.profileCardBg}>
@@ -351,8 +371,8 @@ export default function UIOverlay() {
                   />
 
                   <div className={themeClasses.profileFooter}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2.5 h-2.5 rounded-full animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.9)] ${isViolet ? 'bg-violet-400' : 'bg-cyan-400'}`}></div>
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                      <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.9)] shrink-0 ${isViolet ? 'bg-violet-400' : 'bg-cyan-400'}`}></div>
                       <span className={themeClasses.profileName}>Jean Ryan W. Mellomida</span>
                     </div>
                     <span className={themeClasses.statusBadge}>Available</span>
@@ -365,25 +385,25 @@ export default function UIOverlay() {
         </main>
 
         {/* About Section */}
-        <section id="about" className="w-full py-20">
+        <section id="about" className="w-full py-16">
           <div className={themeClasses.cardBox}>
             <div className={isDark ? "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-900/50 mb-4" : "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-950/40 border border-violet-900/50 mb-4"}>
               <span className={themeClasses.badgeText}>About Me</span>
             </div>
-            <h3 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight">
               Education & Core Background.
             </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-10 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-8 items-start">
               <div className="lg:col-span-7 space-y-4">
                 <span className={isViolet ? "text-violet-400 font-semibold text-sm tracking-widest uppercase" : "text-cyan-400 font-bold text-sm tracking-widest uppercase"}>2025 - 2026 Academic Year</span>
-                <h4 className="text-2xl sm:text-3xl font-bold text-white">Bachelor of Science in Information Systems</h4>
-                <p className="text-slate-400 text-base leading-relaxed">
+                <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Bachelor of Science in Information Systems</h4>
+                <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
                   Graduated with a solid grounding in software development methodologies, systems analysis, and enterprise database administration. My academic projects emphasized solving real-world challenges through robust backend architectures and clean user flows.
                 </p>
                 <ul className="space-y-2.5 text-slate-400 text-sm pt-2">
-                  <li className="flex items-center gap-2.5"><i className={`fas fa-check-circle ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> Specialized in relational database structures and server-side processing.</li>
-                  <li className="flex items-center gap-2.5"><i className={`fas fa-check-circle ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> Experienced with collaborative version control and deployment practices.</li>
-                  <li className="flex items-center gap-2.5"><i className={`fas fa-check-circle ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> Passionate about building modular, maintainable, and user-friendly systems.</li>
+                  <li className="flex items-start gap-2.5"><i className={`fas fa-check-circle mt-1 ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> <span>Specialized in relational database structures and server-side processing.</span></li>
+                  <li className="flex items-start gap-2.5"><i className={`fas fa-check-circle mt-1 ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> <span>Experienced with collaborative version control and deployment practices.</span></li>
+                  <li className="flex items-start gap-2.5"><i className={`fas fa-check-circle mt-1 ${isViolet ? 'text-violet-400' : 'text-cyan-500'}`}></i> <span>Passionate about building modular, maintainable, and user-friendly systems.</span></li>
                 </ul>
               </div>
               <div className={themeClasses.subCardBox}>
@@ -416,19 +436,19 @@ export default function UIOverlay() {
         </section>
 
         {/* Render TechStack Component */}
-        <div id="skills">
+        <div id="skills" className="w-full">
           <TechStack />
         </div>
 
         {/* Projects Section */}
-        <section id="projects" className="w-full py-20">
+        <section id="projects" className="w-full py-16">
           <div className={isDark ? "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-900/50 mb-4" : "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-950/40 border border-violet-900/50 mb-4"}>
             <span className={themeClasses.badgeText}>Portfolio</span>
           </div>
-          <h3 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-12">
+          <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-8 sm:mb-12">
             Featured Projects
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full">
             
             <div className={themeClasses.projectCard}>
               <div>
@@ -436,7 +456,7 @@ export default function UIOverlay() {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent"></div>
                   <i className={`fas fa-cash-register ${isViolet ? 'text-violet-400' : 'text-cyan-500'} text-4xl group-hover:scale-110 transition-transform duration-300`}></i>
                 </div>
-                <h4 className={`text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-cyan-400'}`}>Point of Sales</h4>
+                <h4 className={`text-xl sm:text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-cyan-400'}`}>Point of Sales</h4>
                 <p className="text-slate-400 text-sm mt-3 leading-relaxed">Streamlines sales transactions, manages inventory stock levels, tracks checkouts securely, and produces instant performance records.</p>
               </div>
               <div className={isDark 
@@ -454,7 +474,7 @@ export default function UIOverlay() {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-teal-500/10 via-transparent to-transparent"></div>
                   <i className="fas fa-book-reader text-teal-500 text-4xl group-hover:scale-110 transition-transform duration-300"></i>
                 </div>
-                <h4 className={`text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-teal-400'}`}>Library System</h4>
+                <h4 className={`text-xl sm:text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-teal-400'}`}>Library System</h4>
                 <p className="text-slate-400 text-sm mt-3 leading-relaxed">Digital cataloging platform tailored for archiving book inventories, handling active resource borrowings, and managing member records.</p>
               </div>
               <div className={isDark 
@@ -472,7 +492,7 @@ export default function UIOverlay() {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent"></div>
                   <i className={`fas fa-shirt ${isViolet ? 'text-violet-400' : 'text-cyan-500'} text-4xl group-hover:scale-110 transition-transform duration-300`}></i>
                 </div>
-                <h4 className={`text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-cyan-300'}`}>Clothing Ordering System</h4>
+                <h4 className={`text-xl sm:text-2xl font-bold text-white transition-colors ${isViolet ? 'group-hover:text-violet-400' : 'group-hover:text-cyan-300'}`}>Clothing Ordering System</h4>
                 <p className="text-slate-400 text-sm mt-3 leading-relaxed">Dynamic apparel e-commerce interface featuring customized selection options, interactive shopping carts, and order workflows.</p>
               </div>
               <div className={isDark 
@@ -488,10 +508,10 @@ export default function UIOverlay() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="w-full py-20">
+        <section id="contact" className="w-full py-16 mb-12">
           <div className={themeClasses.cardBox + " relative overflow-hidden"}>
-            <div className="absolute -right-24 -top-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute -left-24 -bottom-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -right-24 -top-24 w-72 h-72 sm:w-96 sm:h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -left-24 -bottom-24 w-72 h-72 sm:w-96 sm:h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
               
@@ -500,8 +520,8 @@ export default function UIOverlay() {
                   <div className={isDark ? "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-900/50 mb-4" : "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-950/40 border border-violet-900/50 mb-4"}>
                     <span className={themeClasses.badgeText}>Get In Touch</span>
                   </div>
-                  <h3 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">Let's build something exceptional.</h3>
-                  <p className="text-slate-400 text-base mt-4 leading-relaxed">
+                  <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight">Let's build something exceptional.</h3>
+                  <p className="text-slate-400 text-sm sm:text-base mt-4 leading-relaxed">
                     Have a project in mind, an inquiry about my background, or want to talk tech? Drop a message or reach out through my socials below.
                   </p>
                 </div>
@@ -514,9 +534,9 @@ export default function UIOverlay() {
                     }>
                       <i className="fas fa-envelope text-lg"></i>
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Direct Email</p>
-                      <p className="text-white text-sm font-medium mt-0.5">mellomidajeanryan@gmail.com</p>
+                      <p className="text-white text-xs sm:text-sm font-medium mt-0.5 truncate">mellomidajeanryan@gmail.com</p>
                     </div>
                   </div>
 
@@ -525,75 +545,75 @@ export default function UIOverlay() {
                       ? "w-12 h-12 rounded-xl bg-cyan-950/60 border border-cyan-900/50 flex items-center justify-center text-cyan-400 shrink-0 shadow-inner" 
                       : "w-12 h-12 rounded-xl bg-violet-950/60 border border-violet-900/50 flex items-center justify-center text-violet-400 shrink-0 shadow-inner"
                     }>
-                      <i className="fas fa-map-marker-alt text-lg"></i>
+                      <i className="fas fa-phone-alt text-lg"></i>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Location</p>
+                      <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Location / Phone</p>
                       <p className="text-white text-sm font-medium mt-0.5">Makilala, Cotabato, Philippines</p>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Connect Online</p>
-                  <div className="flex space-x-3">
-                    <a href="#contact" aria-label="Facebook" className={themeClasses.socialBtn}><i className="fab fa-facebook"></i></a>
-                    <a href="#contact" aria-label="GitHub" className={themeClasses.socialBtn}><i className="fab fa-github"></i></a>
-                    <a href="#contact" aria-label="LinkedIn" className={themeClasses.socialBtn}><i className="fab fa-linkedin"></i></a>
+                  <div className="pt-2 flex items-center gap-3">
+                    <a href="https://github.com" target="_blank" rel="noreferrer" title="GitHub" className={themeClasses.socialBtn}>
+                      <i className="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" title="LinkedIn" className={themeClasses.socialBtn}>
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://facebook.com" target="_blank" rel="noreferrer" title="Facebook" className={themeClasses.socialBtn}>
+                      <i className="fab fa-facebook-f"></i>
+                    </a>
                   </div>
                 </div>
               </div>
 
+              {/* Contact Form */}
               <div className={themeClasses.contactFormBox}>
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className={themeClasses.inputField}
-                      placeholder="e.g. John Doe"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">Your Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="John Doe"
+                        className={themeClasses.inputField}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">Your Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="john@example.com"
+                        className={themeClasses.inputField}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className={themeClasses.inputField}
-                      placeholder="e.g. john@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Message</label>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">Your Message</label>
                     <textarea
-                      id="message"
                       name="message"
                       rows="4"
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      className={themeClasses.inputField}
-                      placeholder="Write your message here..."
+                      placeholder="Type your message here..."
+                      className={themeClasses.inputField + " resize-none"}
                     ></textarea>
                   </div>
-                  {formStatus && (
-                    <div className={`p-4 rounded-xl text-sm ${formStatus.type === 'success' ? 'bg-emerald-950/60 border border-emerald-800/60 text-emerald-300' : 'bg-rose-950/60 border border-rose-800/60 text-rose-300'}`}>
-                      {formStatus.text}
-                    </div>
-                  )}
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full font-bold py-3.5 px-6 rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${isViolet ? 'bg-violet-600 hover:bg-violet-500 text-slate-950 shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'bg-cyan-600 hover:bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.4)]'}`}
+                    className={`w-full font-bold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg ${isViolet ? 'bg-violet-600 hover:bg-violet-500 text-slate-950 shadow-[0_0_20px_rgba(124,58,237,0.4)]' : 'bg-cyan-600 hover:bg-cyan-500 text-slate-950 shadow-[0_0_200px_rgba(6,182,212,0.4)]'}`}
                   >
                     {isSubmitting ? (
                       <>
@@ -607,6 +627,12 @@ export default function UIOverlay() {
                       </>
                     )}
                   </button>
+
+                  {formStatus && (
+                    <div className={`p-4 rounded-xl text-sm ${formStatus.type === 'success' ? 'bg-emerald-950/80 border border-emerald-800/60 text-emerald-300' : 'bg-rose-950/80 border border-rose-800/60 text-rose-300'}`}>
+                      {formStatus.text}
+                    </div>
+                  )}
                 </form>
               </div>
 
@@ -615,9 +641,18 @@ export default function UIOverlay() {
         </section>
 
       </div>
+
       {/* Footer */}
-      <footer className="w-full py-8 border-t border-cyan-950/60 text-center text-xs text-slate-500 relative z-10 bg-[#04060a]">
-        <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
+      <footer className={`w-full border-t py-8 px-4 text-center text-xs text-slate-500 relative z-10 ${isDark ? 'border-cyan-950/60 bg-[#04060a]' : 'border-violet-950/60 bg-slate-950'}`}>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')} className="hover:text-slate-300 transition-colors">Home</a>
+            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className="hover:text-slate-300 transition-colors">About</a>
+            <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-slate-300 transition-colors">Projects</a>
+            <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-slate-300 transition-colors">Contact</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
