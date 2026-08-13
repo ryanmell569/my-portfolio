@@ -1,0 +1,23 @@
+
+@import "tailwindcss";
+
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: scrollRight 25s linear infinite;
+}
+
+.marquee-track-right:hover {
+  animation-play-state: paused;
+}
