@@ -615,18 +615,6 @@ export default function UIOverlay() {
         </section>
 
       </div>
-
-      {/* Scroll-to-Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          title="Scroll to Top"
-          className={`fixed bottom-6 right-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center text-slate-950 font-bold shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer ${isViolet ? 'bg-violet-500 hover:bg-violet-400 shadow-[0_0_20px_rgba(124,58,237,0.6)]' : 'bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]'}`}
-        >
-          <i className="fas fa-arrow-up"></i>
-        </button>
-      )}
-
       {/* Footer */}
       <footer className="w-full py-8 border-t border-cyan-950/60 text-center text-xs text-slate-500 relative z-10 bg-[#04060a]">
         <p>© {new Date().getFullYear()} Jean Ryan W. Mellomida. All rights reserved.</p>
