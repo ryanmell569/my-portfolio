@@ -1,23 +1,168 @@
-
 @import "tailwindcss";
 
+/* ── Global resets ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-@keyframes scrollRight {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Text selection ── */
+::selection {
+  background: rgba(6, 182, 212, 0.35);
+  color: #fff;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #04060a;
+}
+::-webkit-scrollbar-thumb {
+  background: #0e7490;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* ── Floating badge animations ── */
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+@keyframes floatFast {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-3deg);
+  }
+}
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+.animate-float-fast {
+  animation: floatFast 3s ease-in-out infinite;
+}
+
+/* ── Marquee ── */
+@keyframes scrollLeft {
   0% {
-    transform: translateX(-25%);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
 }
-
-.marquee-track-right {
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.tech-track-left {
   display: flex;
   width: max-content;
-  will-change: transform;
-  animation: scrollRight 25s linear infinite;
+  animation: scrollLeft 36s linear infinite;
+}
+.tech-track-right {
+  display: flex;
+  width: max-content;
+  animation: scrollRight 36s linear infinite;
+}
+.tech-track-left:hover,
+.tech-track-right:hover {
+  animation-play-state: paused;
 }
 
-.marquee-track-right:hover {
-  animation-play-state: paused;
+/* ── Subtle grid texture ── */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bg-grid-violet {
+  background-image:
+    linear-gradient(to right, rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Noise overlay ── */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-animate {
+  background-size: 300% 300%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* ── Fade-in on scroll (JS adds .is-visible) ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Glow pulse on accent dots ── */
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 6px 2px rgba(6, 182, 212, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(6, 182, 212, 0.9);
+  }
+}
+@keyframes glowPulseViolet {
+  0%,
+  100% {
+    box-shadow: 0 0 6px 2px rgba(139, 92, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(139, 92, 246, 0.9);
+  }
+}
+.glow-dot-cyan {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+.glow-dot-violet {
+  animation: glowPulseViolet 2.5s ease-in-out infinite;
 }

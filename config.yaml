@@ -1,0 +1,5 @@
+model_list:
+  - model_name: custom/blackbox-base
+    litellm_params:
+      model: vercel_ai_gateway/openai/gpt-4.1-mini
+        api_key: "os.environ/VERCEL_AI_GATEWAY_API_KEY"
